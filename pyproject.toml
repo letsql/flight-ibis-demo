@@ -43,7 +43,7 @@ requires-python = ">=3.10"
 dev = ["bumpver", "pip-tools", "pytest"]
 
 [project.urls]
-Homepage = "https://github.com/voltrondata/flight-ibis-demo"
+Homepage = "https://github.com/gizmodata/flight-ibis-demo"
 
 [project.scripts]
 flight-server = "flight_ibis.server:run_flight_server"
