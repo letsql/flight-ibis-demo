@@ -26,13 +26,13 @@ classifiers = [
 ]
 keywords = ["flight-ibis", "flight", "ibis"]
 dependencies = [
-    "pyarrow==15.0.*",
+    "pyarrow==17.0.*",
     "click==8.1.*",
-    "ibis-framework[duckdb]==8.0.*",
+    "ibis-framework[duckdb]==9.5.*",
     "munch==4.0.*",
-    "pyOpenSSL==24.0.*",
-    "cryptography==42.0.*",
-    "pyjwt==2.8.*",
+    "pyOpenSSL==24.2.*",
+    "cryptography==43.0.*",
+    "pyjwt==2.9.*",
     "codetiming==1.4.*",
     "pyspark==3.5.*",
     "urllib3==2.2.*"

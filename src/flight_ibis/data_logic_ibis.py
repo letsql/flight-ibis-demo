@@ -16,7 +16,6 @@ MAX_ORDER_TOTALPRICE = 500_000.00
 MAX_PERCENT_RANK = 0.98
 
 # Ibis parameters (global in scope)
-p_schema_only = ibis.param(type="Boolean")
 p_min_date = ibis.param(type="date")
 p_max_date = ibis.param(type="date")
 p_total_hash_buckets = ibis.param(type="int")
@@ -55,10 +54,8 @@ def build_golden_rules_ibis_expression(conn: ibis.BaseBackend,
     # Filter orders to the hash bucket asked for
     # Filter out orders larger than MAX_ORDER_TOTALPRICE
     orders_prelim = (orders
-                     .alias("orders_sql")
-                     .filter(p_schema_only == False)
-                     .sql("SELECT orders_sql.*, hash(orders_sql.o_orderkey) AS hash_result FROM orders_sql")
                      .filter(_.o_orderdate.between(lower=p_min_date, upper=p_max_date))
+                     .mutate(hash_result=_.o_orderkey.hash())
                      .mutate(hash_bucket=(_.hash_result % p_total_hash_buckets))
                      .filter(_.hash_bucket == (p_hash_bucket_num - 1))
                      .filter(_.o_totalprice <= MAX_ORDER_TOTALPRICE)

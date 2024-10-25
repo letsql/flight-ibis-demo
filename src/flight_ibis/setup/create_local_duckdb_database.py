@@ -39,26 +39,25 @@ def create_local_duckdb_database(database_file: str,
 
     if database_file_path.exists():
         if overwrite:
-            logger.warning(msg=f"Deleting existing database file: '{database_file_path.as_posix()}'")
+            logger.warning(msg=f"Deleting existing database file: '{database_file_path}'")
             database_file_path.unlink(missing_ok=True)
         else:
-            raise RuntimeError(f"Database file: '{database_file_path.as_posix()}' - already exists, aborting b/c overwrite False")
+            raise RuntimeError(f"Database file: '{database_file_path}' - already exists, aborting b/c overwrite False")
 
     # Get a DuckDB database connection
-    with duckdb.connect(database=database_file_path.as_posix()) as conn:
-        logger.info(msg=f"Creating DuckDB Database file: '{database_file_path.as_posix()}'")
+    with duckdb.connect(database=database_file_path) as conn:
+        logger.info(msg=f"Creating DuckDB Database file: '{database_file_path}'")
 
         # Install the TPCH extension needed to generate the data...
         conn.load_extension(extension="tpch")
 
         # Generate the data
-        sql_statement = f"CALL dbgen(sf=?)"
-        logger.info(f"Running SQL: {sql_statement} - with parameter: {scale_factor}")
+        sql_statement = f"CALL dbgen(sf={scale_factor})"
+        logger.info(f"Running SQL: {sql_statement}")
         conn.execute(query=sql_statement,
-                     parameters=[scale_factor]
                      )
 
-        logger.info(msg=f"Successfully created DuckDB Database file: '{database_file_path.as_posix()}'")
+        logger.info(msg=f"Successfully created DuckDB Database file: '{database_file_path}'")
 
 
 if __name__ == '__main__':
