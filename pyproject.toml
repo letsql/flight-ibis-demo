@@ -50,7 +50,7 @@ flight-server = "flight_ibis.server:run_flight_server"
 flight-client = "flight_ibis.client:run_flight_client"
 flight-spark-client = "flight_ibis.spark_client_test:run_spark_flight_client"
 flight-data-bootstrap = "flight_ibis.setup.create_local_duckdb_database:create_local_duckdb_database"
-flight-create-tls-keypair = "flight_ibis.setup.tls_utilities:create_tls_keypair"
+flight-create-tls-keypair = "flight_ibis.setup.tls_utilities:click_create_tls_keypair"
 flight-create-mtls-ca-keypair = "flight_ibis.setup.mtls_utilities:create_ca_keypair"
 flight-create-mtls-client-keypair = "flight_ibis.setup.mtls_utilities:create_client_keypair"
 

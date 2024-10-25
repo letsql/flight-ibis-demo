@@ -32,6 +32,11 @@ pip install --editable .
 
 ```
 
+### Note
+For the following commands - if you running from source and using `--editable` mode (for development purposes) - you will need to set the PYTHONPATH environment variable as follows:
+```shell
+export PYTHONPATH=$(pwd)/src
+```
 
 #### 3. Create a sample TPC-H 1GB database (will take about 243MB of disk space due to compression)
 ```shell
