@@ -69,3 +69,40 @@ tag = true
 "src/flight_ibis/__init__.py" = [
     '^__version__ = "{version}"$',
 ]
+
+[tool.poetry]
+name = "flight-ibis"
+version = "0.0.34"
+description = "An Apache Arrow Flight server/client example powered by Ibis and DuckDB"
+readme = "README.md"
+authors = ["Philip Moore <prmoore77@hotmail.com>"]
+packages = [
+  { include = "flight_ibis", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyarrow = "17.0.*"
+click = "8.1.*"
+ibis-framework = { version = "9.5.*", extras = [ "duckdb" ] }
+munch = "4.0.*"
+pyOpenSSL = "24.2.*"
+cryptography = "43.0.*"
+pyjwt = "2.9.*"
+codetiming = "1.4.*"
+pyspark = "3.5.*"
+urllib3 = "2.2.*"
+
+[tool.poetry.group.dev.dependencies]
+bumpver = "*"
+pip-tools = "*"
+pytest = "*"
+
+[tool.poetry.scripts]
+flight-server = "flight_ibis.server:run_flight_server"
+flight-client = "flight_ibis.client:run_flight_client"
+flight-spark-client = "flight_ibis.spark_client_test:run_spark_flight_client"
+flight-data-bootstrap = "flight_ibis.setup.create_local_duckdb_database:create_local_duckdb_database"
+flight-create-tls-keypair = "flight_ibis.setup.tls_utilities:click_create_tls_keypair"
+flight-create-mtls-ca-keypair = "flight_ibis.setup.mtls_utilities:create_ca_keypair"
+flight-create-mtls-client-keypair = "flight_ibis.setup.mtls_utilities:create_client_keypair"
