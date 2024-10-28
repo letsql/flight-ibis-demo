@@ -31,11 +31,27 @@
         shellHook = ''
           export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
         '';
+
+        flight-demo = pkgs.writeShellScriptBin "flight-demo" ''
+          if [ ! -d data ]; then
+            mkdir data
+            ${myapp}/bin/flight-data-bootstrap
+          fi
+          ${myapp}/bin/flight-server >out 2>err &
+          server_pid=$!
+          sleep 2
+          ${myapp}/bin/flight-client
+          wc -l out err
+          kill "$server_pid"
+        '';
+
       in
       {
         apps = {
-          # they're already all exposed via nix-develop
-          # # but this lets us nix-run
+          flight-data-bootstrap = {
+            type = "app";
+            program = "${myapp}/bin/flight-data-bootstrap";
+          };
           flight-server = {
             type = "app";
             program = "${myapp}/bin/flight-server";
@@ -44,9 +60,9 @@
             type = "app";
             program = "${myapp}/bin/flight-client";
           };
-          flight-data-bootstrap = {
+          flight-demo = {
             type = "app";
-            program = "${myapp}/bin/flight-data-bootstrap";
+            program = "${flight-demo}/bin/flight-demo";
           };
         };
         packages.default = myapp;
